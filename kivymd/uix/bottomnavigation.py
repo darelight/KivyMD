@@ -333,6 +333,20 @@ class MDTab(Screen, ThemableBehavior):
 class MDBottomNavigationItem(MDTab):
     header = ObjectProperty()
 
+    def get_title_font_name(self):
+        if "_label" in self.header.ids:
+            return self.header.ids["_label"].font_name
+        return ''
+
+    def set_title_font_name(self, font_name):
+        if "_label" in self.header.ids:
+            self.header.ids["_label"].font_name = font_name
+            return True
+        return False
+
+    font_name = AliasProperty(get_title_font_name, set_title_font_name, bind=["header", ])
+
+
     def on_tab_release(self, *args):
         par = self.parent_widget
         par.ids.tab_manager.current = self.name
