@@ -100,7 +100,7 @@ __all__ = ("MDToolbar", "MDBottomAppBar", "AppBarActionButton")
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.metrics import dp
-from kivy.properties import ListProperty, StringProperty, ObjectProperty
+from kivy.properties import ListProperty, StringProperty, ObjectProperty, AliasProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
@@ -148,6 +148,7 @@ Builder.load_string(
         padding: dp(12), 0
 
         MDLabel:
+            id: title_content
             font_style: 'H6'
             opposite_colors: root.opposite_colors
             theme_text_color: 'Custom'
@@ -188,6 +189,19 @@ class MDToolbar(
     title = StringProperty()
     """The text displayed on the MDToolbar."""
 
+    def get_title_font_name(self):
+        if "title_content" in self.ids:
+            return self.ids["title_content"].font_name
+        return ''
+
+    def set_title_font_name(self, font_name):
+        if "title_content" in self.ids:
+            self.ids["title_content"].font_name = font_name
+            return True
+        return False
+
+    font_name = AliasProperty(get_title_font_name, set_title_font_name, bind=["ids", ])    
+    
     md_bg_color = ListProperty([0, 0, 0, 1])
 
     anchor_title = StringProperty("left")
