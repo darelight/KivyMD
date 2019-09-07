@@ -40,6 +40,7 @@ from kivy.properties import (
     BoundedNumericProperty,
     NumericProperty,
     BooleanProperty,
+    AliasProperty,
 )
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
