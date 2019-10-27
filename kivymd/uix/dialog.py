@@ -96,6 +96,7 @@ __all__ = (
     "ContentInputDialog",
 )
 
+from kivy.core.text import DEFAULT_FONT
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
@@ -123,8 +124,8 @@ Builder.load_string(
     spacing: dp(10)
 
     MDLabel:
-        font_style: 'H6'
         text: root.title
+        font_name: root.title_font_name
         halign: 'left' if not root.device_ios else 'center'
 
     BoxLayout:
@@ -155,7 +156,7 @@ Builder.load_string(
     MDLabel:
         id: title
         text: root.title
-        font_style: 'H6'
+        font_name: root.title_font_name
         halign: 'left' if not root.device_ios else 'center'
         valign: 'top'
         size_hint_y: None
@@ -303,6 +304,7 @@ class BaseDialog(ThemableBehavior, ModalView):
 
 class MDInputDialog(BaseDialog):
     title = StringProperty("Title")
+    title_font_name = StringProperty(DEFAULT_FONT)
     hint_text = StringProperty()
     text_button_ok = StringProperty("Ok")
     text_button_cancel = StringProperty()
@@ -314,6 +316,7 @@ class MDInputDialog(BaseDialog):
 
         self.content_dialog = ContentInputDialog(
             title=self.title,
+            title_font_name=self.title_font_name,
             hint_text=self.hint_text,
             text_button_ok=self.text_button_ok,
             text_button_cancel=self.text_button_cancel,
@@ -329,6 +332,7 @@ class MDInputDialog(BaseDialog):
 
 class MDDialog(BaseDialog):
     title = StringProperty("Title")
+    title_font_name = StringProperty(DEFAULT_FONT)
     text = StringProperty("Text dialog")
     text_button_cancel = StringProperty()
     text_button_ok = StringProperty("Ok")
@@ -339,6 +343,7 @@ class MDDialog(BaseDialog):
         super().__init__(**kwargs)
         content_dialog = ContentMDDialog(
             title=self.title,
+            title_font_name=self.title_font_name,
             text=self.text,
             text_button_ok=self.text_button_ok,
             text_button_cancel=self.text_button_cancel,
@@ -350,6 +355,7 @@ class MDDialog(BaseDialog):
 
 class ContentInputDialog(Heir):
     title = StringProperty()
+    title_font_name = StringProperty()
     hint_text = StringProperty()
     text_button_ok = StringProperty()
     text_button_cancel = StringProperty()
@@ -358,6 +364,7 @@ class ContentInputDialog(Heir):
 
 class ContentMDDialog(Heir):
     title = StringProperty()
+    title_font_name = StringProperty()
     text = StringProperty()
     text_button_cancel = StringProperty()
     text_button_ok = StringProperty()
